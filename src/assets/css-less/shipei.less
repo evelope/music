@@ -1,0 +1,105 @@
+@baseFontSize: 108;
+
+@w:width;
+@h:height;
+
+@m:margin;
+@mt:margin-top;
+@mb:margin-bottom;
+@ml:margin-left;
+@mr:margin-right;
+
+
+@p:padding;
+@pt:padding-top;
+@pb:padding-bottom;
+@pl:padding-left;
+@pr:padding-right;
+
+@l:left;
+@t:top;
+@r:right;
+@b:bottom;
+
+@lh:line-height;
+@fs:font-size;
+@br:border-radius;
+
+.px2rem(@name, @px){
+    @{name}: @px / @baseFontSize * 1rem;
+}
+.w(@px){
+    .px2rem(@w,@px)
+}
+.h(@px){
+    .px2rem(@h,@px)
+}
+
+
+
+.m(@px){
+    .px2rem(@m,@px)
+}
+.mt(@px){
+    .px2rem(@mt,@px);  
+}
+.mb(@px){
+    .px2rem(@mb,@px);  
+}
+.ml(@px){
+    .px2rem(@ml,@px); 
+}
+.mr(@px){
+    .px2rem(@mr,@px);
+}
+.m-all(@px,@px2){
+    .mt(@px);
+    .mb(@px);
+    .ml(@px2);
+    .mr(@px2);
+}
+
+
+.p(@px){
+    .px2rem(@p,@px)
+}
+.pt(@px){
+    .px2rem(@pt,@px);  
+}
+.pb(@px){
+    .px2rem(@pb,@px);  
+}
+.pl(@px){
+    .px2rem(@pl,@px); 
+}
+.pr(@px){
+    .px2rem(@pr,@px);
+}
+.p-all(@px,@px2){
+    .pt(@px);
+    .pb(@px);
+    .pl(@px2);
+    .pr(@px2);
+}
+
+.lh(@px){
+    .px2rem(@lh,@px)
+}
+.fs(@px){
+    .px2rem(@fs,@px)
+}
+.br(@px){
+    .px2rem(@br,@px)
+}
+.l(@px){
+    .px2rem(@l,@px)
+}
+.t(@px){
+    .px2rem(@t,@px)
+}
+.r(@px){
+    .px2rem(@r,@px)
+}
+.b(@px){
+    .px2rem(@b,@px)
+}
