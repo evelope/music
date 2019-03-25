@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <audio v-if="audioShow" autoplay ref="myAudio" @error="audioError()">
+      <source :src="musicStatus.music && musicStatus.music.url" type="audio/ogg">你的浏览器不支持audio音频
+    </audio>
     <div v-if="begin" class="begin">
       <img src="@/assets/img/begin-bottom.jpg">
     </div>
@@ -7,11 +10,13 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
-      begin: false
+      begin: false,
+      // 控制切换
+      audioShow: true
     };
   },
   async mounted() {
@@ -23,10 +28,13 @@ export default {
       offset: 0
     });
     this.musicListEdit(res);
-
+    this.musicEdit({ index: 0 });
+  },
+  computed: {
+    ...mapState(["musicStatus"])
   },
   methods: {
-    ...mapMutations(["musicListEdit"]),
+    ...mapMutations(["musicListEdit", "musicEdit"]),
     // 引入：获取热门歌曲|
     ...mapActions(["getMusicList"]),
     // 首次加载 大屏处理
@@ -42,6 +50,29 @@ export default {
       } else {
         this.begin = false;
       }
+    },
+    // 音乐出错
+    audioError() {
+      console.log("9999");
+      volume
+    }
+  },
+  watch: {
+    "musicStatus.play"(n) {
+      if (n) {
+        this.$refs.myAudio.play();
+      } else {
+        this.$refs.myAudio.pause();
+      }
+    },
+    "musicStatus.music.url"() {
+      this.audioShow = false;
+      this.$nextTick(() => {
+        this.audioShow = true;
+        this.$nextTick(()=>{
+          this.$refs.myAudio.play();
+        })
+      });
     }
   }
 };

@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     // 音乐状态
     musicStatus: {
-      play: false,
+      play: true,
+      index: 0,
       music: {
         id: "",
         name: "",
@@ -49,9 +50,21 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    // 播放/暂停 音乐
+    palyMusic(state, {status}) {
+      if (!!status) {
+        state.musicStatus.play = status;
+      } else {
+        state.musicStatus.play = !state.musicStatus.play;
+      }
+    },
     // 设置正在播放的音乐
     musicEdit(state, params) {
-      console.log(state, params);
+      state.musicStatus = {
+        ...state.musicStatus,
+        index: params.index,
+        music: state.musiclist.myLike.songs[params.index]
+      };
     },
     // 设置正在播放的音乐列表
     musicListEdit(state, params) {

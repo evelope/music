@@ -66,3 +66,41 @@ export function sendDelete(url, params) {
 export function sendAll(iterable, callback) {
   return axios.all(iterable).then(axios.spread(callback));
 }
+
+
+//axios本版本不支持jsonp 自己拓展一个
+export function sendJsonp(url, data) {
+  if (!url) {
+    console.error('Axios.JSONP 至少需要一个url参数!')
+    return;
+  }
+  return new Promise((resolve, reject) => {
+    window.jsonCallBack = (result) => {
+      resolve(result)
+    }
+    let params = "?" + urlEncode(data).slice(1) + "&key=579621905";
+    let JSONP = document.createElement("script");
+    JSONP.type = "text/javascript";
+    JSONP.src = `${url}${params}&callback=jsonCallBack`;
+    document.getElementsByTagName("head")[0].appendChild(JSONP);
+    setTimeout(() => {
+      document.getElementsByTagName("head")[0].removeChild(JSONP)
+    }, 500)
+  })
+}
+
+// 对象转换 url
+function urlEncode(param, key, encode) {
+  if (param == null) return '';
+  var paramStr = '';
+  var t = typeof (param);
+  if (t == 'string' || t == 'number' || t == 'boolean') {
+    paramStr += '&' + key + '=' + ((encode == null || encode) ? encodeURIComponent(param) : param);
+  } else {
+    for (var i in param) {
+      var k = key == null ? i : key + (param instanceof Array ? '[' + i + ']' : '.' + i)
+      paramStr += urlEncode(param[i], k, encode)
+    }
+  }
+  return paramStr
+}

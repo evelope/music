@@ -1,8 +1,18 @@
 <template>
   <div class="box-foot">
     <div class="music-swiper">
-      <mt-swipe class="box-foot-swiper" :auto="0" :show-indicators="false">
-        <mt-swipe-item v-for="(v,i) in musiclist.myLike.songs" :key="i" class="box-foot-swiper-item">
+      <mt-swipe
+        class="box-foot-swiper"
+        :auto="0"
+        :show-indicators="false"
+        :defaultIndex="musicStatus.index"
+        @change="handleChange"
+      >
+        <mt-swipe-item
+          v-for="(v,i) in musiclist.myLike.songs"
+          :key="i"
+          class="box-foot-swiper-item"
+        >
           <dl>
             <dt>
               <img v-lazy.container="v.pic">
@@ -16,8 +26,8 @@
       </mt-swipe>
     </div>
     <div class="music-change">
-      <p class="bofang" v-waves="{type:'center'}">
-        <span class="iconfont icon-bofang"></span>
+      <p class="bofang" v-waves="{type:'center'}" @click="palyMusic">
+        <span class="iconfont" :class="musicStatus.play?'icon-zanting':'icon-bofang'"></span>
       </p>
       <p class="caidan" v-waves="{type:'center'}">
         <span class="iconfont icon-caidan"></span>
@@ -27,10 +37,17 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   computed: {
-    ...mapState(["musiclist"])
+    ...mapState(["musiclist", "musicStatus"])
+  },
+  methods: {
+    ...mapMutations(["palyMusic", "musicEdit"]),
+    handleChange(index) {
+      this.musicEdit({index});
+      this.palyMusic({status: true})
+    }
   }
 };
 </script>
@@ -136,6 +153,9 @@ export default {
     }
     .bofang {
       z-index: 100;
+      .icon-zanting {
+        .fs(100);
+      }
     }
     .caidan {
       right: 0;
