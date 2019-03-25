@@ -27,7 +27,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-        // console.log(to,from);
         if(to.path=="/box/home"){
             this.transitionName = "slide-right";
         }else if(to.path=="/box/video"){
@@ -39,14 +38,6 @@ export default {
                 this.transitionName = "slide-right";
             }
         }
-
-    //   let isBack = this.$router.isBack; //  监听路由变化时的状态为前进还是后退
-    //   if (isBack) {
-    //     this.transitionName = "slide-right";
-    //   } else {
-    //     this.transitionName = "slide-left";
-    //   }
-    //   this.$router.isBack = false;
     }
   }
 };

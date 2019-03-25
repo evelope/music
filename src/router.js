@@ -5,13 +5,14 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      component:()=>import('./App.vue'),
-      redirect:"/box",
-      children: [
+    // {
+    //   path: '/',
+    //   component:()=>import('./App.vue'),
+    //   redirect:"/box",
+    //   children: [
+
         {
-          path:"/box",
+          path:"/",
           redirect:"/box/music",
           component:()=>import('./views/Box.vue'),
           children:[
@@ -44,7 +45,8 @@ export default new Router({
             }
           ]
         }
-      ]
-    }
+        
+  //     ]
+  //   }
   ]
 })

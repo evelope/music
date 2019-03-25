@@ -63,7 +63,7 @@ export default {
             flex: 1;
             color: rgba(255,255,255,0.8);
             .lh(110);
-            .fs(35);
+            .fs(38);
             text-align: center;
             &.router-link-active {
                 color: #ffffff;
