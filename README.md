@@ -9,7 +9,7 @@
 
 ## 链接
 
-你可以点击这里打开演示demo [vue网易音乐](https://evelope.github.io/music/dist/)
+你可以点击这里打开演示demo [vue网易音乐](http://47.95.195.6:5555)
 
 ### 下载它
 
