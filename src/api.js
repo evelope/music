@@ -11,4 +11,4 @@ import {
 } from "@/utils/httpAxios.js";
 
 // 云音乐热歌 排行榜
-export const getSongList = (data) => sendGet("/api/music/netease/songList", data);
+export const getSongList = (data) => sendGet("https://api.bzqll.com/music/netease/songList", data);
