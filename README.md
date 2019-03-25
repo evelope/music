@@ -1,6 +1,6 @@
 # music
 
-## 使用vue开发一款模仿网易于音乐
+## 使用vue开发一款模仿网易云音乐
 
 > 技术支持：
 1. [iconfont 文字图标](https://www.iconfont.cn/)
