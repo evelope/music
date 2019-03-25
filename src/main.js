@@ -13,6 +13,11 @@ import "@/assets/font/iconfont.css"
 //水波纹效果
 import waves from "@/components/global/waves/index.js"
 
+// 阻止 touch
+document.addEventListener('touchstart', function (event) {
+  event.preventDefault();
+});
+
 
 Vue.use(MintUI)
 Vue.use(waves)
