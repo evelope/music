@@ -1,8 +1,10 @@
 <template>
   <div class="box-foot">
-    <div class="music-swiper">
+    <div class="music-swiper" @click="show=true">
       <mt-swipe
+        v-if="!show"
         class="box-foot-swiper"
+        ref="mtSwipe"
         :auto="0"
         :show-indicators="false"
         :defaultIndex="musicStatus.index"
@@ -27,27 +29,50 @@
     </div>
     <div class="music-change">
       <p class="bofang" v-waves="{type:'center'}" @click="palyMusic">
-        <span class="iconfont" :class="musicStatus.play?'icon-zanting':'icon-bofang'"></span>
+        <span class="iconfont" :class="musicStatus.play?'icon-zanting2':'icon-zanting'"></span>
       </p>
       <p class="caidan" v-waves="{type:'center'}">
-        <span class="iconfont icon-caidan"></span>
+        <span class="iconfont icon-bofangliebiao"></span>
       </p>
     </div>
+  <!-- @changeMusic="changeMusic"-->
+    <MusicController :show.sync="show"/>
   </div>
 </template>
 
 <script>
+import MusicController from "@/components/basic/MusicController.vue";
 import { mapState, mapMutations } from "vuex";
 export default {
+  data() {
+    return {
+      show: false
+    };
+  },
+  mounted() {
+    this.editVue(this);
+  },
   computed: {
     ...mapState(["musiclist", "musicStatus"])
   },
+  components: {
+    MusicController
+  },
   methods: {
-    ...mapMutations(["palyMusic", "musicEdit"]),
+    ...mapMutations(["palyMusic", "musicEdit", "editVue"]),
     handleChange(index) {
-      this.musicEdit({index});
-      this.palyMusic({status: true})
-    }
+      this.musicEdit({ index });
+      this.palyMusic({ status: true });
+    },
+    // 切换轮播
+    // changeMusic(type) {
+    //   if (type == "up") {
+    //     this.$refs.mtSwipe.prev();
+    //   } else {
+    //     this.$refs.mtSwipe.next();
+    //   }
+    //   console.log("changeMusic")
+    // }
   }
 };
 </script>
@@ -55,6 +80,7 @@ export default {
 <style lang="less" scoped>
 .box-foot {
   position: fixed;
+  z-index: 300;
   top: calc(100vh - 1.25rem);
   // bottom: 0;
   left: 0;
@@ -148,14 +174,11 @@ export default {
       transform: translate(-20%, -50%);
       border-radius: 50%;
       span {
-        .fs(90);
+        .fs(80);
       }
     }
     .bofang {
       z-index: 100;
-      .icon-zanting {
-        .fs(100);
-      }
     }
     .caidan {
       right: 0;

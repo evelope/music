@@ -6,7 +6,7 @@
     <div v-if="begin" class="begin">
       <img src="@/assets/img/begin-bottom.jpg">
     </div>
-    <router-view/>
+    <router-view :class="{'view': begin}"/>
   </div>
 </template>
 <script>
@@ -31,10 +31,10 @@ export default {
     this.musicEdit({ index: 0 });
   },
   computed: {
-    ...mapState(["musicStatus"])
+    ...mapState(["musicStatus", "musiclist", "vue"])
   },
   methods: {
-    ...mapMutations(["musicListEdit", "musicEdit"]),
+    ...mapMutations(["musicListEdit", "musicEdit", "musicTimeEdit"]),
     // 引入：获取热门歌曲|
     ...mapActions(["getMusicList"]),
     // 首次加载 大屏处理
@@ -51,27 +51,65 @@ export default {
         this.begin = false;
       }
     },
+    // 监听audio 函数
+    audioWatch() {
+      // this.$refs.myAudio.currentTime = 260;
+      this.$refs.myAudio.addEventListener("timeupdate", () => {
+        // 存储播放时间
+        this.musicTimeEdit(this.$refs.myAudio.currentTime);
+        // console.log(
+        //   this.$refs.myAudio.duration,
+        //   this.$refs.myAudio.currentTime,
+        //   "--"
+        // );
+        if (this.$refs.myAudio.currentTime >= this.$refs.myAudio.duration) {
+          if (this.musicStatus.index + 1 >= this.musiclist.myLike.length) {
+          } else {
+            this.musicEdit({ index: ++this.musicStatus.index });
+          }
+          this.vue.$refs.mtSwipe.next();
+          return;
+        }
+      });
+    },
     // 音乐出错
-    audioError() {
-      console.log("9999");
-      volume
-    }
+    audioError() {}
   },
   watch: {
     "musicStatus.play"(n) {
+      let v = this.$refs.myAudio.volume;
+      clearInterval(this.t);
       if (n) {
         this.$refs.myAudio.play();
+        this.t = setInterval(() => {
+          v += 0.1;
+          if (v <= 1) {
+            this.$refs.myAudio.volume = v;
+          } else {
+            clearInterval(this.t);
+          }
+        }, 150);
       } else {
-        this.$refs.myAudio.pause();
+        this.t = setInterval(() => {
+          v -= 0.1;
+          if (v > 0) {
+            this.$refs.myAudio.volume = v;
+          } else {
+            clearInterval(this.t);
+            this.$refs.myAudio.pause();
+          }
+        }, 150);
       }
     },
     "musicStatus.music.url"() {
       this.audioShow = false;
       this.$nextTick(() => {
         this.audioShow = true;
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.$refs.myAudio.play();
-        })
+          // 监听video
+          this.audioWatch();
+        });
       });
     }
   }
@@ -102,14 +140,25 @@ export default {
       width: 100%;
     }
   }
+  .view {
+    animation: view-opt 1.5s 1 ease-out;
+  }
   @keyframes opt {
     70% {
       opacity: 1;
       transform: scale(1);
     }
     100% {
-      transform: scale(2);
+      transform: scale(0.4);
       opacity: 0;
+    }
+  }
+  @keyframes view-opt {
+    0% {
+      transform: scale(2);
+    }
+    80% {
+      transform: scale(2);
     }
   }
 }

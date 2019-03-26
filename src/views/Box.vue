@@ -6,12 +6,13 @@
     </transition>
 
     <box-foot></box-foot>
+    
   </div>
 </template>
 
 <script>
 import BoxNav from "@/components/basic/BoxNav.vue";
-import BoxFoot from "@/components/basic/BoxFoot"
+import BoxFoot from "@/components/basic/BoxFoot.vue";
 export default {
   data() {
     return {
@@ -50,6 +51,7 @@ export default {
 }
 .box-content {
   position: absolute;
+  z-index: 200;
   overflow-x: hidden;
   max-width: 540px;
   width: 100%;

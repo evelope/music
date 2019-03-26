@@ -6,6 +6,8 @@ Vue.use(Vuex)
 import { getSongList } from "@/api.js"
 export default new Vuex.Store({
   state: {
+    // 暂用vue 实例
+    vue:{},
     // 音乐状态
     musicStatus: {
       play: true,
@@ -17,7 +19,8 @@ export default new Vuex.Store({
         pic: "",
         lrc: "",
         url: "",
-        time: 0
+        time: 0,
+        currentTime: 0
       }
     },
     // 音乐存储列表
@@ -50,6 +53,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    // 设置 vue
+    editVue(state, vue) {
+      state.vue = vue;
+    },
     // 播放/暂停 音乐
     palyMusic(state, {status}) {
       if (!!status) {
@@ -73,6 +80,13 @@ export default new Vuex.Store({
     // 设置展示的音乐列表
     showListEdit(state, params) {
       state.musiclist.showList = params;
+    },
+    // 设置音乐播放时长
+    musicTimeEdit(state, params) {
+      state.musicStatus.music = {
+        ...state.musicStatus.music,
+        currentTime: params
+      };
     }
   },
   actions: {

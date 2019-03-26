@@ -59,6 +59,9 @@ export default {
     position: relative;
     z-index: 10;
   }
+  .sousuo>span {
+    .fs(60);
+  }
   .caidan {
     .w(120);
     .h(120);

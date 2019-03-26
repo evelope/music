@@ -70,14 +70,15 @@ http.interceptors.response.use(
     return config.data || {};
   },
   (error) => {
+    console.log(87878787)
     if (error.response.status === 401) {
-      showToast(error.response.data.message);
+      console.log(error);
     } else if (error.response.status >= 400 && error.response.status < 500) {
-      showToast(error.response.data.message);
+      console.log(error);
     } else {
-      showToast(HTTP_STATUS_MSG_5XX);
+      console.log(error);
     }
-    return Promise.reject(error.response);
+    return Promise.reject(error);
   }
 );
 
