@@ -82,7 +82,7 @@ export default {
       if (n) {
         this.$refs.myAudio.play();
         this.t = setInterval(() => {
-          v += 0.1;
+          v += 0.2;
           if (v <= 1) {
             this.$refs.myAudio.volume = v;
           } else {
@@ -91,7 +91,7 @@ export default {
         }, 150);
       } else {
         this.t = setInterval(() => {
-          v -= 0.1;
+          v -= 0.2;
           if (v > 0) {
             this.$refs.myAudio.volume = v;
           } else {

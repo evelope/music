@@ -1,6 +1,6 @@
 <template>
     <div class="diantai">
-        ddddddddddddd
+        电台页面，敬请期待
     </div>
 </template>
 

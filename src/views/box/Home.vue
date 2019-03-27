@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        homehomehomehomehomehomehome
+        个人页面，敬请期待
     </div>
 </template>
 

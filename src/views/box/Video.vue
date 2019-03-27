@@ -1,5 +1,7 @@
 <template>
-    <div class="video">videovideovideovideovideovideo</div>
+    <div class="video">
+      MV页面，敬请期待
+    </div>
 </template>
 
 <script>

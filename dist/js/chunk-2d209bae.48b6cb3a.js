@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d209bae"],{a9ff:function(n,e,t){"use strict";t.r(e);var a=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("div",{staticClass:"friend"},[n._v("\n    朋友页面，敬请期待\n")])},s=[],c={},l=c,u=t("2877"),i=Object(u["a"])(l,a,s,!1,null,null,null);e["default"]=i.exports}}]);
+//# sourceMappingURL=chunk-2d209bae.48b6cb3a.js.map

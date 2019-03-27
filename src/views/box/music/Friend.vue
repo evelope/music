@@ -1,6 +1,6 @@
 <template>
     <div class="friend">
-        sssssssssssssssss
+        朋友页面，敬请期待
     </div>
 </template>
 

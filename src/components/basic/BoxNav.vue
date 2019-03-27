@@ -44,7 +44,7 @@ export default {
   background: linear-gradient(to bottom, #d83d34, #e2453a);
   .h(145);
   position: fixed;
-  z-index: 100;
+  z-index: 250;
   top: 0;
   left: 0;
   width: 100vw;
