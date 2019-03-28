@@ -1,6 +1,6 @@
 <template>
   <div class="box-foot">
-    <div class="music-swiper" @click="show=true">
+    <div class="music-swiper" @click="showCon">
       <mt-swipe
         v-if="!show"
         class="box-foot-swiper"
@@ -36,7 +36,7 @@
       </p>
     </div>
   <!-- @changeMusic="changeMusic"-->
-    <MusicController :show.sync="show"/>
+    <MusicController ref="musicCon" :show.sync="show"/>
   </div>
 </template>
 
@@ -64,6 +64,10 @@ export default {
       this.musicEdit({ index });
       this.palyMusic({ status: true });
     },
+    showCon() {
+      this.show = true;
+      this.editVue(this.$refs.musicCon);
+    }
     // 切换轮播
     // changeMusic(type) {
     //   if (type == "up") {

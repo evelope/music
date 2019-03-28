@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     // 暂用vue 实例
     vue:{},
+    audio: {},
     // 音乐状态
     musicStatus: {
       play: true,
@@ -56,6 +57,10 @@ export default new Vuex.Store({
     // 设置 vue
     editVue(state, vue) {
       state.vue = vue;
+    },
+    // 设置 audo
+    editAudio(state, audio) {
+      state.audio = audio;
     },
     // 播放/暂停 音乐
     palyMusic(state, {status}) {

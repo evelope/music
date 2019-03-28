@@ -34,7 +34,7 @@ export default {
     ...mapState(["musicStatus", "musiclist", "vue"])
   },
   methods: {
-    ...mapMutations(["musicListEdit", "musicEdit", "musicTimeEdit"]),
+    ...mapMutations(["musicListEdit", "musicEdit", "musicTimeEdit", "editAudio"]),
     // 引入：获取热门歌曲|
     ...mapActions(["getMusicList"]),
     // 首次加载 大屏处理
@@ -56,6 +56,7 @@ export default {
       // this.$refs.myAudio.currentTime = 260;
       this.$refs.myAudio.addEventListener("timeupdate", () => {
         // 存储播放时间
+        // this.$refs.myAudio.currentTime = this.musicStatus.music.currentTime;
         this.musicTimeEdit(this.$refs.myAudio.currentTime);
         // console.log(
         //   this.$refs.myAudio.duration,
@@ -106,6 +107,7 @@ export default {
       this.$nextTick(() => {
         this.audioShow = true;
         this.$nextTick(() => {
+          this.editAudio(this.$refs.myAudio);
           this.$refs.myAudio.play();
           // 监听video
           this.audioWatch();

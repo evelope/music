@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { getLeft } from "@/utils/base.js";
 export default {
   data() {
     return {
@@ -37,27 +38,19 @@ export default {
     };
   },
   mounted() {
-    this.tabLeft = this.getLeft(this.$refs.tab[this.tabIndex], "music-nav");
+    this.tabLeft = getLeft(this.$refs.tab[this.tabIndex], "music-nav");
     window.addEventListener("resize", () => {
-      this.tabLeft = this.getLeft(this.$refs.tab[this.tabIndex], "music-nav");
+      this.tabLeft = getLeft(this.$refs.tab[this.tabIndex], "music-nav");
     });
   },
   methods: {
     changeNav(index) {
       this.tabIndex = index;
-    },
-    // 相对于指定父级的偏移
-    getLeft(e, o) {
-      if (!e || !o) return;
-      var offset = e.offsetLeft;
-      if (e.offsetParent.className != o)
-        offset += this.getLeft(e.offsetParent, o);
-      return offset;
     }
   },
   watch: {
     tabIndex(n) {
-      this.tabLeft = this.getLeft(this.$refs.tab[n], "music-nav");
+      this.tabLeft = getLeft(this.$refs.tab[n], "music-nav");
     }
   }
 };

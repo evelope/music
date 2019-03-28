@@ -21,3 +21,24 @@ export const formatSeconds = (times) => {
   }
   return result;
 }
+
+
+// 设备判断
+export const bRedir = () => {
+  if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+    return "ios"; //移动端
+  } else if (/(Android)/i.test(navigator.userAgent)) {
+    return "android"; //移动端
+  } else {
+    return "pc"; //PC端
+  }
+};
+
+// 相对于指定父级的偏移
+export const getLeft = (e, o) => {
+  if (!e || !o) return;
+  var offset = e.offsetLeft;
+  if (e.offsetParent.className != o)
+    offset += getLeft(e.offsetParent, o);
+  return offset;
+}

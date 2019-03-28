@@ -3,7 +3,7 @@
     <div class="bg" :style="{background: `#333 url(${musicBg}) center center no-repeat`}"></div>
     <div class="title">
       <div class="go-back">
-        <p v-waves @click="$emit('update:show', false)">
+        <p v-waves @click="goback">
           <span class="iconfont icon-fanhui"></span>
         </p>
       </div>
@@ -54,9 +54,21 @@
       </div>
       <div class="controller-box">
         <span>{{currentTime}}</span>
-        <div>
+        <div
+          @mousedown.prevent.stop="mousedown"
+          @touchstart.prevent.stop="mousedown"
+          @mouseup="mouseup"
+          @touchend="mouseup"
+          ref="ctp"
+        >
           <p :style="{width:(musicStatus.music.currentTime/musicStatus.music.time*100+'%')}"></p>
-          <div :style="{left:(musicStatus.music.currentTime/musicStatus.music.time*100+'%')}"></div>
+          <div
+            @mousedown.prevent.stop="mousedown"
+            @touchstart.prevent.stop="mousedown"
+            @mouseup="mouseup"
+            @touchend="mouseup"
+            :style="{left:(musicStatus.music.currentTime/musicStatus.music.time*100+'%')}"
+          ></div>
         </div>
         <span>{{musicStatus.music.time | formatFilter}}</span>
       </div>
@@ -83,14 +95,16 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import { formatSeconds } from "../../utils/base.js";
+import { formatSeconds, bRedir, getLeft } from "@/utils/base.js";
 import { clearTimeout, setTimeout } from "timers";
+import { constants } from "fs";
 export default {
   data() {
     return {
       stopPlay: false,
-      currentTime: '00:00:00',
-      t: null
+      currentTime: "00:00:00",
+      t: null,
+      device: ""
     };
   },
   props: {
@@ -100,22 +114,28 @@ export default {
     }
   },
   mounted() {
+    this.device = bRedir() == "pc" ? "onmousemove" : "ontouchmove";
     setInterval(() => {
-      this.currentTime = formatSeconds(this.musicStatus.music.currentTime) || '00:00:00';
+      this.currentTime =
+        formatSeconds(this.musicStatus.music.currentTime) || "00:00:00";
     }, 1000);
-    this.editVue(this);
   },
   computed: {
-    ...mapState(["musiclist", "musicStatus"]),
+    ...mapState(["musiclist", "musicStatus", "audio"]),
     musicBg() {
       return this.musicStatus.music.pic;
     }
   },
   methods: {
-    ...mapMutations(["palyMusic", "musicEdit", "editVue"]),
+    ...mapMutations(["palyMusic", "musicEdit", "musicTimeEdit", "editVue"]),
     handleChange(index) {
       this.musicEdit({ index });
       this.palyMusic({ status: true });
+    },
+    // 返回
+    goback() {
+      this.$emit("update:show", false);
+      this.editVue(this.$parent);
     },
     // 上下切换曲子
     changeMusic(type) {
@@ -190,6 +210,55 @@ export default {
           this.$refs.mtSwipe.translate(prevPage.$el, 0, 300);
         }
       }
+    },
+    // 拖动事件
+    mousedown(e) {
+      let ofl = getLeft(this.$refs.ctp, "music-controller");
+      let ofw = this.$refs.ctp.offsetWidth;
+      let scrollX =
+        document.documentElement.scrollLeft || document.body.scrollLeft; //分别兼容ie和chrome
+
+      e = e || window.event;
+      e = this.device == "onmousemove" ? e : e.touches ? e.touches[0] : e;
+
+      let x = e.pageX || e.clientX + scrollX; //兼容火狐和其他浏览器
+      let px = e.offsetX;
+      let width = (x - ofl) / ofw;
+      let timer = width * this.musicStatus.music.time;
+      this.audio.currentTime = timer;
+      document[this.device] = e => {
+        e = e || window.event;
+        e = this.device == "onmousemove" ? e : e.touches ? e.touches[0] : e;
+
+        let x = e.pageX || e.clientX + scrollX; //兼容火狐和其他浏览器
+        let px = e.offsetX;
+        let width = (x - ofl) / ofw;
+        if (width <= 1 && width >= 0) {
+          width = width;
+        } else if (width > 1) {
+          width = 1;
+        } else {
+          width = 0;
+        }
+        let timer = width * this.musicStatus.music.time;
+        // this.musicTimeEdit(100);
+        // console.log(getLeft(this.$refs.tab[this.tabIndex], "music-controller"));
+
+        this.audio.currentTime = timer;
+        let upmethod =
+          this.device == "onmousemove" ? "onmouseup" : "ontouchend";
+        document[upmethod] = e => {
+          document[this.device] = null;
+          document[upmethod] = null;
+        };
+      };
+    },
+    mouseup() {
+      let upmethod = this.device == "onmousemove" ? "onmouseup" : "ontouchend";
+      document[upmethod] = e => {
+        document[this.device] = null;
+        document[upmethod] = null;
+      };
     }
   },
   filters: {
@@ -224,7 +293,7 @@ export default {
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  animation: opt-top  0.3s 1;
+  animation: opt-top 0.3s 1;
   .bg {
     width: 100%;
     height: 100%;
