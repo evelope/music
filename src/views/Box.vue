@@ -1,21 +1,24 @@
 <template>
   <div class="box">
-    <BoxNav/>
+    <BoxNav @caidanShow="show=true"/>
     <transition :name="transitionName">
       <router-view class="box-content"/>
     </transition>
 
     <box-foot></box-foot>
     
+    <box-page :show.sync="show"></box-page>
   </div>
 </template>
 
 <script>
 import BoxNav from "@/components/basic/BoxNav.vue";
 import BoxFoot from "@/components/basic/BoxFoot.vue";
+import BoxPage from "@/components/basic/BoxPage.vue";
 export default {
   data() {
     return {
+      show: false,
       transitionName: "slide-right" // 默认动态路由变化为slide-right
     };
   },
@@ -23,6 +26,7 @@ export default {
     //es6
     BoxNav,
     BoxFoot,
+    BoxPage
     //es5
     //BoxNav:BoxNav || box-nav:BoxNav
   },

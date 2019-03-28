@@ -12,7 +12,8 @@ import 'mint-ui/lib/style.css'
 import "@/assets/font/iconfont.css"
 //水波纹效果
 import waves from "@/components/global/waves/index.js"
-
+// touch 自定义事件
+import "@/components/global/swipeTouch/touch.js"
 
 Vue.use(MintUI)
 Vue.use(waves)

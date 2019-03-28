@@ -1,6 +1,6 @@
 <template>
   <div class="box-nav">
-    <div class="caidan" v-waves="{color:'rgba(0, 0, 0, 0.2)'}">
+    <div class="caidan" v-waves="{color:'rgba(0, 0, 0, 0.2)'}" @click="$emit('caidanShow',true)">
       <span class="iconfont icon-caidan"></span>
     </div>
 
@@ -10,7 +10,7 @@
       </router-link>
     </div>
 
-    <div class="sousuo" v-waves="{color:'rgba(0, 0, 0, 0.2)'}">
+    <div class="sousuo" @click="$router.push('/search')" v-waves="{color:'rgba(0, 0, 0, 0.2)'}">
       <span class="iconfont icon-sousuo"></span>
     </div>
   </div>

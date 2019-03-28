@@ -44,6 +44,10 @@ export default new Router({
               component:()=>import("./views/box/Video.vue")
             }
           ]
+        },
+        {
+          path:"/search",
+          component:()=>import('./views/Search.vue'),
         }
         
   //     ]
