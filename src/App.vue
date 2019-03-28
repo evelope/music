@@ -74,7 +74,9 @@ export default {
       });
     },
     // 音乐出错
-    audioError() {}
+    audioError() {
+      console.log(403);
+    }
   },
   watch: {
     "musicStatus.play"(n) {
