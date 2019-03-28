@@ -24,6 +24,11 @@
           <div></div>
         </div>
       </div>
+      
+      <div class="music-arc music-arc2">
+
+      </div>
+      
       <mt-swipe
         ref="mtSwipe"
         class="music-swiper"
@@ -136,6 +141,11 @@ export default {
     goback() {
       this.$emit("update:show", false);
       this.editVue(this.$parent);
+      if (!this.musicStatus.play) {
+        this.$nextTick(() => {
+          this.musicStatus.play = false;
+        });
+      }
     },
     // 上下切换曲子
     changeMusic(type) {
@@ -428,6 +438,13 @@ export default {
         }
       }
     }
+    .music-arc2 {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.05);
+    }
     .music-arc {
       margin: 0 auto;
       .w(815);
@@ -435,7 +452,6 @@ export default {
       .mt(305);
       overflow: hidden;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -508,6 +524,66 @@ export default {
           #0f0f12,
           #141417,
           #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
+          #141417,
+          #0f0f12,
           #141417
         );
         &::before {
@@ -515,11 +591,11 @@ export default {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          .h(200);
+          .h(300);
           background: linear-gradient(
             to bottom,
             transparent,
-            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.15),
             transparent
           );
           width: 100%;

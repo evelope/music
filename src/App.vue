@@ -146,12 +146,14 @@ export default {
     animation: view-opt 1.5s 1 ease-out;
   }
   @keyframes opt {
-    70% {
+    80% {
       opacity: 1;
+      .br(0);
       transform: scale(1);
     }
     100% {
       transform: scale(0.4);
+      .br(300);
       opacity: 0;
     }
   }

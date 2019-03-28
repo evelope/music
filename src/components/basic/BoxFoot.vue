@@ -35,7 +35,7 @@
         <span class="iconfont icon-bofangliebiao"></span>
       </p>
     </div>
-  <!-- @changeMusic="changeMusic"-->
+    <!-- @changeMusic="changeMusic"-->
     <MusicController ref="musicCon" :show.sync="show"/>
   </div>
 </template>
@@ -67,6 +67,11 @@ export default {
     showCon() {
       this.show = true;
       this.editVue(this.$refs.musicCon);
+      if (!this.musicStatus.play) {
+        this.$nextTick(() => {
+          this.musicStatus.play = false;
+        });
+      }
     }
     // 切换轮播
     // changeMusic(type) {
