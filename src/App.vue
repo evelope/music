@@ -133,7 +133,7 @@ export default {
     top: 0;
     left: 0;
     background: #d03835 url("~@/assets/img/begin-top.jpg") top center no-repeat;
-    background-size: contain;
+    background-size: cover;
     animation: opt 2s 1;
     animation-fill-mode: forwards;
     img {
