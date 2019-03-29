@@ -72,6 +72,10 @@ export default {
           this.musicStatus.play = false;
         });
       }
+    },
+    showBe() {
+      this.show = true;
+      this.editVue(this.$refs.musicCon);
     }
     // 切换轮播
     // changeMusic(type) {

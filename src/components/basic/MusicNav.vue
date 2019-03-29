@@ -75,7 +75,7 @@ export default {
     }
   }
   .tab {
-    .w(72);
+    .w(75);
     .h(6);
     .br(3);
     position: absolute;

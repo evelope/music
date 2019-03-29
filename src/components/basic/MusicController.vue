@@ -24,11 +24,9 @@
           <div></div>
         </div>
       </div>
-      
-      <div class="music-arc music-arc2">
 
-      </div>
-      
+      <div class="music-arc music-arc2"></div>
+
       <mt-swipe
         ref="mtSwipe"
         class="music-swiper"
@@ -311,7 +309,7 @@ export default {
     left: 0;
     top: 0;
     transition: background 0.5s;
-    filter: blur(50px) brightness(0.6);
+    filter: blur(10px) brightness(0.6);
     z-index: -1;
     box-shadow: 0 0 500px #333 inset;
     transform: scale(2);
@@ -670,8 +668,8 @@ export default {
         }
         & > div {
           position: absolute;
-          .w(40);
-          .h(40);
+          width: 16px;
+          height: 16px;
           top: 50%;
           transform: translateY(-50%) translateX(-50%);
           background: #fff;
@@ -681,8 +679,8 @@ export default {
           &::before {
             content: "";
             position: absolute;
-            .w(10);
-            .h(10);
+            width: 4px;
+            height: 4px;
             background: #ff3938;
             border-radius: 50%;
             left: 50%;

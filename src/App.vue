@@ -80,6 +80,7 @@ export default {
   },
   watch: {
     "musicStatus.play"(n) {
+      if(!this.$refs.myAudio) return;
       let v = this.$refs.myAudio.volume;
       clearInterval(this.t);
       if (n) {

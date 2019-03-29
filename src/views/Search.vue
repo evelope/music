@@ -7,22 +7,105 @@
         </p>
       </div>
       <div class="search-input">
-        <input autofocus type="text" placeholder="搜你喜欢~" v-model.trim="inputVal">
-        <p v-if="inputVal">
-          <span @click="inputVal=''" class="iconfont icon-guanbi1"></span>
+        <input
+          autofocus
+          @focus="inputFocus=true"
+          @blur="inputBlur"
+          type="text"
+          placeholder="搜你喜欢~"
+          v-model.trim="searchData.s"
+          @input="remoteMethod"
+        >
+        <p v-if="searchData.s">
+          <span @click="searchData.s=''" class="iconfont icon-guanbi1"></span>
         </p>
       </div>
     </div>
+
+    <div class="search-result">
+      <SearchSelect
+        v-if="searchData.s.length && inputFocus"
+        :value="searchData.s"
+        :dataList="searchDataList"
+        @chooseItem="chooseItem"
+      />
+    </div>
+
+    <box-foot ref="boxFoot"></box-foot>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+import BoxFoot from "@/components/basic/BoxFoot.vue";
+import SearchSelect from "@/components/basic/SearchSelect.vue";
+import { getSearch } from "@/api.js";
+import { constants } from "fs";
+import { setTimeout } from 'timers';
 export default {
   name: "search",
   data() {
     return {
-      inputVal: ""
+      inputFocus: true,
+      searchData: {
+        s: "",
+        type: "song",
+        limit: 10,
+        offset: 1
+      },
+      timeoutId: null,
+      timer: 300,
+      searchDataList: []
+    };
+  },
+  components: {
+    BoxFoot,
+    SearchSelect
+  },
+  mounted() {
+    if (!this.musicStatus.play) {
+      this.$nextTick(() => {
+        this.musicStatus.play = false;
+      });
     }
+  },
+  methods: {
+    ...mapMutations(["musicListEdit", "musicEdit"]),
+    async getSearch() {
+      let res = await getSearch(this.searchData).catch(error => {});
+      return res;
+    },
+    // 失去焦点
+    inputBlur() {
+      this.timeoutId ? clearTimeout(this.timeoutId) : null;
+      this.timeoutId = setTimeout(()=>{
+        this.timeoutId = null;
+        this.inputFocus = false;
+      })
+    },
+    // 搜索员工
+    remoteMethod() {
+      // 函数防抖
+      this.timeoutId ? clearTimeout(this.timeoutId) : null;
+      if (!this.searchData.s.length) return;
+      this.timeoutId = setTimeout(async () => {
+        // 接口获取 。。。
+        this.timeoutId = null;
+        let res = await this.getSearch();
+        this.searchDataList = res || [];
+      }, this.timer);
+    },
+    // 点击选择
+    chooseItem(index) {
+      let obj = JSON.parse(JSON.stringify(this.musiclist.myLike));
+      obj.songs.splice(this.musicStatus.index+1, 0, this.searchDataList[index]);
+      this.musicListEdit(obj);
+      this.musicEdit({ index: ++this.musicStatus.index });
+      this.$refs.boxFoot.showBe();
+    }
+  },
+  computed: {
+    ...mapState(["musicStatus","musiclist"])
   }
 };
 </script>
@@ -83,7 +166,7 @@ export default {
       input:-ms-input-placeholder {
         color: #e87a73;
       }
-      input+p {
+      input + p {
         .w(110);
         height: 100%;
         position: absolute;
@@ -98,6 +181,9 @@ export default {
         }
       }
     }
+  }
+  .search-result {
+    position: relative;
   }
 }
 </style>

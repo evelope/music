@@ -6,7 +6,7 @@
     </transition>
 
     <box-foot></box-foot>
-    
+
     <box-page :show.sync="show"></box-page>
   </div>
 </template>
@@ -15,6 +15,7 @@
 import BoxNav from "@/components/basic/BoxNav.vue";
 import BoxFoot from "@/components/basic/BoxFoot.vue";
 import BoxPage from "@/components/basic/BoxPage.vue";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -30,28 +31,38 @@ export default {
     //es5
     //BoxNav:BoxNav || box-nav:BoxNav
   },
+  computed: {
+    ...mapState(["musicStatus"])
+  },
+  mounted() {
+    if (!this.musicStatus.play) {
+      this.$nextTick(() => {
+        this.musicStatus.play = false;
+      });
+    }
+  },
   watch: {
     $route(to, from) {
-        if(to.path=="/box/home"){
-            this.transitionName = "slide-right";
-        }else if(to.path=="/box/video"){
-             this.transitionName = "slide-left";
-        }else{
-            if(from.path=="/box/home"){
-                 this.transitionName = "slide-left";
-            }else{
-                this.transitionName = "slide-right";
-            }
+      if (to.path == "/box/home") {
+        this.transitionName = "slide-right";
+      } else if (to.path == "/box/video") {
+        this.transitionName = "slide-left";
+      } else {
+        if (from.path == "/box/home") {
+          this.transitionName = "slide-left";
+        } else {
+          this.transitionName = "slide-right";
         }
+      }
     }
   }
 };
 </script>
 <style lang="less" scoped>
 .box {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 .box-content {
   position: absolute;

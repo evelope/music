@@ -70,13 +70,12 @@ http.interceptors.response.use(
     return config.data || {};
   },
   (error) => {
-    console.log(87878787)
     if (error.response.status === 401) {
       console.log(error);
     } else if (error.response.status >= 400 && error.response.status < 500) {
       console.log(error);
     } else {
-      console.log(error);
+      console.log(545454);
     }
     return Promise.reject(error);
   }
